@@ -7,8 +7,15 @@ export const authServices = {
         return response.data
     },
 
-    async register(username: string, fullName: string, email: string, password: string, avatar: string, coverImage: string) {
-        const response = await apiClient.post(endpoints.auth.register, { username, fullName, email, password, avatar, coverImage })
+    async register(fullName: string, username: string, email: string, password: string, avatar?: File | null, coverImage?: File | null) {
+        const formData = new FormData()
+        formData.append('username', username)
+        formData.append('fullName', fullName)
+        formData.append('email', email)
+        formData.append('password', password)
+        formData.append('avatar', avatar || '')
+        formData.append('coverImage', coverImage || '')
+        const response = await apiClient.post(endpoints.auth.register, formData)
         return response.data
     },
 

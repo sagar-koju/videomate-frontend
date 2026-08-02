@@ -1,10 +1,18 @@
 'use client'
 import React, {useState} from 'react'
 import Link from 'next/link'
+import {useLogin} from '@/hooks/useAuth'
+import { AxiosError } from 'axios'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const loginMutation = useLogin()
+
+  const handleLogin = () => {
+    loginMutation.mutate({ email, password })
+  }
 
   return (
     <div className="min-h-screen w-full bg-black/10 flex items-center justify-center p-6">
@@ -73,18 +81,26 @@ const Login = () => {
               />
             </div>
 
-            <div className="flex items-center gap-4">
-              <Link href="/forgot-password" className="text-[13px] font-medium text-slate-600 hover:text-blue-600">
+            <div className="flex items-center gap-2 justify-end">
+              <Link href="/forgot-password" className="text-[13px] font-medium hover:underline text-blue-600">
                 Forgot Password?
               </Link>
             </div>
-
-            <button className="mt-1.5 w-full py-3 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300 transition">
+            <div className="flex flex-col">
+              {loginMutation.isError && (
+              <p className="text-red-500 text-sm">
+                {loginMutation.error instanceof AxiosError
+                  ? loginMutation.error.response?.data?.message || 'An error occurred'
+                  : 'An error occurred'}
+              </p>
+            )}
+            <button disabled={loginMutation.isPending} onClick={() => {handleLogin()}} className="mt-1.5 w-full py-3 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-300 transition">
               Sign In
             </button>
+            </div>
             <div className="flex items-center justify-center gap-2">
               <p className="text-[13px] font-medium text-slate-800">Don't have an account?</p>
-              <Link href="/signup" className="text-[13px] font-medium text-slate-600 hover:text-blue-600">
+              <Link href="/signup" className="text-xs font-medium text-blue-600 hover:underline">
                 Register now
               </Link>
             </div>

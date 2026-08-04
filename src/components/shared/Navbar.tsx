@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useGetCurrentUser } from '@/hooks/useAuth'
 import { useRouter } from "next/navigation";
 import Image from 'next/image'
+import { useLogout } from '@/hooks/useAuth'
 
 const dropdownItems = [
   { label: 'Profile', href: '/profile', icon: CircleUserRound },
@@ -14,15 +15,24 @@ const dropdownItems = [
   { label: 'Switch Account', href: '/switch-account', icon: Users },
   { label: 'Appearance', href: '/appearance', icon: Moon },
   { label: 'Language', href: '/language', icon: Globe },
-  { label: 'Sign out', href: '/sign-out', icon: LogOut },
   { label: 'Help', href: '/help', icon: HelpCircle },
 ]
 
 const Navbar = () => {
-  const [loggedIn, setLoggedIn] = useState(false)
   const { toggleSidebar } = useSidebar()
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const router = useRouter();
+
+  const { data: currentUser, isLoading} = useGetCurrentUser();
+
+  if (!isLoading) {
+    console.log('Current User:', currentUser);
+  }
+
+  const handleLogin = () => {
+    router.push('/login');
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -39,27 +49,23 @@ const Navbar = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  })
+  }, [])
 
-  const { data: currentUser, isLoading, isError } = useGetCurrentUser();
+  const logoutMutation = useLogout();
 
-  if (!isLoading) {
-    console.log('Current User:', currentUser);
-  }
-
-  const router = useRouter();
-
-  const handleLogin = () => {
-    router.push('/login');
-  }
-
-  useEffect(() => {
-    if (currentUser) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
+  const handleLogout = async () => {
+    try {
+      logoutMutation.mutate(undefined, {
+        onSuccess: () => {
+          setOpenProfileDropdown(false)
+          router.push('/')
+          router.refresh()
+        }
+      });
+    } catch (error) {
+      console.error('Error logging out:', error);
     }
-  }, [currentUser]);
+  }
 
   return (
     <nav className="fixed left-0 right-0 top-0 z-50 h-14 border-b border-slate-200 bg-white">
@@ -78,7 +84,7 @@ const Navbar = () => {
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-900" size={16} />
         </div>
 
-        {loggedIn ? (
+        {currentUser ? (
           <div className="flex items-center gap-4">
             <Bell className="text-slate-900" size={20} />
             <div className="relative" ref={dropdownRef}>
@@ -96,7 +102,7 @@ const Navbar = () => {
               )}
               {openProfileDropdown && (
                 <div className="absolute right-0 top-12 w-70  rounded-md border border-slate-300 bg-white">
-                  <div className="flex flex-col w-full h-full gap-2">
+                  <div className="flex flex-col w-full h-full py-4">
                     <div className="relative flex w-full justify-center items-center p-4">
                       <div className="relative h-16 w-16">
                         <Image
@@ -111,17 +117,24 @@ const Navbar = () => {
                       <span className="ml-2 text-lg font-semibold text-slate-900">{currentUser.data.fullName}</span>
                       <span className="ml-2 text-sm text-slate-700">@{currentUser.data.username}</span>
                     </div>
-                    <div className="flex flex-col gap-1 mt-4 pb-4">
+                    <div className="flex flex-col gap-1 mt-4">
                       {dropdownItems.map((item) => (
                         <Link
                           key={item.label}
                           href={item.href}
-                          className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100"
+                          className="flex items-center gap-3 px-4 py-2 hover:bg-slate-100"
                         >
-                          <item.icon size={16} />
+                          <item.icon size={20} />
                           <span className="text-sm text-slate-900">{item.label}</span>
                         </Link>
                       ))}
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 px-4 py-2 hover:bg-slate-100"
+                      >
+                        <LogOut size={20} />
+                        <span className="text-sm text-slate-900">Sign out</span>
+                      </button>
                     </div>
                   </div>
                 </div>

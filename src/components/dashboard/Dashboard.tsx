@@ -1,16 +1,17 @@
 'use client'
 import React, { useEffect } from 'react'
+import { dummyVideos } from "@/types/data";
 import { useGetHomeFeed } from "@/hooks/useGetHomeFeed";
 import { useInView } from "react-intersection-observer";
 import Skeleton from '@/components/home/Skeleton';
 import {formatDuration, timeAgo} from "@/lib/utils";
 import Image from 'next/image';
 
-type DashboardPageProps = {
+type HomePageProps = {
   scrollRoot: HTMLElement | null;
 }
 
-export default function DashboardPage({ scrollRoot }: DashboardPageProps) {
+export default function Homepage({ scrollRoot }: HomePageProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = useGetHomeFeed();
   const Video = data?.pages.flatMap(page => page.videos);
 
@@ -45,10 +46,10 @@ export default function DashboardPage({ scrollRoot }: DashboardPageProps) {
             </div>
           </div>
           <div className="flex gap-2 py-2">
-            <div className="relative h-14 w-14 ">
+            <div className="relative h-14 w-14">
               <Image src={video.owner.avatar} alt="avatar" fill className="object-cover overflow-hidden rounded-full border border-slate-300 p-0.5" />
             </div>
-            <div className="flex-1 flex-col ">
+            <div className="flex-1 flex-col">
               <h3 className="font-semibold line-clamp-2">{video.title}</h3>
               <p className="text-sm text-gray-600 line-clamp-2">{video.owner.fullName}</p>
               <p className="text-sm text-gray-600">{video.views} views • {timeAgo(video.createdAt)}</p>

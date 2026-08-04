@@ -1,6 +1,7 @@
 import { authServices } from '@/services/authServices'
 import { userServices } from '@/services/userService';
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 
 export type LoginPayload = {
     email: string;
@@ -8,8 +9,17 @@ export type LoginPayload = {
 };
 
 export const useLogin = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: ({ email, password }: LoginPayload) => authServices.login(email, password),
+        onSuccess: async (response) => {
+            await queryClient.setQueryData(['currentUser'], {
+                statusCode: 200,
+                message: 'Current user fetched successfully',
+                data: response?.data?.user,
+            });
+            await queryClient.invalidateQueries({ queryKey: ['homeFeed'] });
+        }
     })
 }
 
@@ -48,5 +58,16 @@ export const useGetCurrentUser = () => {
         queryKey: ['currentUser'],
         queryFn: authServices.getCurrentUser,
         retry: false,
+    })
+}
+
+export const useLogout = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: () => authServices.logout(),
+        onSuccess: async () => {
+            await queryClient.removeQueries({ queryKey: ['currentUser'] });
+            await queryClient.removeQueries({ queryKey: ['homeFeed'] });
+        }
     })
 }

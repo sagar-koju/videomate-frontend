@@ -1,17 +1,41 @@
 'use client'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
-import {useLogin} from '@/hooks/useAuth'
+import { useLogin } from '@/hooks/useAuth'
 import { AxiosError } from 'axios'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const loginMutation = useLogin()
 
+  const router = useRouter();
+
   const handleLogin = () => {
-    loginMutation.mutate({ email, password })
+    loginMutation.mutate(
+      { email, password },
+      {
+        onSuccess: () => {
+          router.push('/dashboard');
+        },
+        onError: (error) => {
+          const errorMessage = error as AxiosError<{
+                      message?: string,
+                      error?: string;
+                    }>;
+          
+          const apiErrorMessage = 
+          errorMessage.response?.data?.message || 
+          errorMessage.response?.data?.error || 
+          'Login failed. Please try again.';
+
+          setErrorMessage(apiErrorMessage);
+        }
+      }
+    )
   }
 
   return (
@@ -31,7 +55,7 @@ const Login = () => {
           </svg>
 
           {/* form */}
-          <div className="flex flex-col gap-4 max-w-[300px]">
+          <div className="flex flex-col gap-4 max-w-[300px] overflow-y-auto">
             <div>
               <p className="text-xs font-semibold tracking-wider uppercase text-slate-400 mb-1">
                 Welcome back
@@ -54,9 +78,9 @@ const Login = () => {
                 <path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" />
               </svg>
               <input
-                type="text"
+                type="email"
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your login or e-mail"
+                placeholder="Email"
                 className="w-full pl-10 pr-3.5 py-3 text-sm rounded-lg border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 focus:bg-white transition"
               />
             </div>
@@ -87,16 +111,14 @@ const Login = () => {
               </Link>
             </div>
             <div className="flex flex-col">
-              {loginMutation.isError && (
-              <p className="text-red-500 text-sm">
-                {loginMutation.error instanceof AxiosError
-                  ? loginMutation.error.response?.data?.message || 'An error occurred'
-                  : 'An error occurred'}
-              </p>
-            )}
-            <button disabled={loginMutation.isPending} onClick={() => {handleLogin()}} className="mt-1.5 w-full py-3 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-300 transition">
-              Sign In
-            </button>
+              {errorMessage && (
+                <p className="text-red-500 text-sm">
+                  {errorMessage}
+                </p>
+              )}
+              <button disabled={loginMutation.isPending} onClick={() => { handleLogin() }} className="mt-1.5 w-full py-3 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-300 transition">
+                {loginMutation.isPending ? 'Logging...' : 'Login'}
+              </button>
             </div>
             <div className="flex items-center justify-center gap-2">
               <p className="text-[13px] font-medium text-slate-800">Don't have an account?</p>

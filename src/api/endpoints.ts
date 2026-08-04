@@ -5,10 +5,15 @@ export const endpoints = {
         logout: '/auth/logout',
         changePassword: '/auth/change-password',
         refreshToken: '/auth/refresh-token',
+        getCurrentUser: '/auth/me',
     },
 
     users: {
-        getCurrentUser: '/user/me',
+        getHistory: '/users/history',
+        updateAccountDetails: '/users/update-account',
+        updateAvatar: '/users/update-avatar',
+        updateCoverImage: '/users/update-cover-image',
+        getChannel: '/users/channel/:username',
     },
 
     dashboard: {

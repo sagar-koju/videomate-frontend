@@ -1,9 +1,9 @@
-import Homepage from "@/components/home/Homepage";
-import Navbar from "@/components/shared/Navbar";
-import Sidebar from "@/components/shared/Sidebar";
-import Image from "next/image";
+import React from 'react'
+import DashboardPage from '@/components/dashboard/Dashboard'
+import { Sidebar } from 'lucide-react'
+import Navbar from '@/components/shared/Navbar'
 
-export default function Home() {
+const page = () => {
   return (
     <div className="h-screen overflow-hidden bg-white">
       <Navbar />
@@ -13,9 +13,11 @@ export default function Home() {
         </aside>
 
         <main className="flex-1 overflow-y-auto">
-          <Homepage scrollRoot={null} />
+          <DashboardPage scrollRoot={null} />
         </main>
       </div>
     </div>
-  );
+  )
 }
+
+export default page

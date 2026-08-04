@@ -1,5 +1,6 @@
 import { authServices } from '@/services/authServices'
-import { useMutation } from "@tanstack/react-query";
+import { userServices } from '@/services/userService';
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export type LoginPayload = {
     email: string;
@@ -39,5 +40,13 @@ export const useRegister = () => {
                 avatar ?? undefined,
                 coverImage ?? undefined
             ),
+    })
+}
+
+export const useGetCurrentUser = () => {
+    return useQuery({
+        queryKey: ['currentUser'],
+        queryFn: userServices.getCurrentUser,
+        retry: false,
     })
 }

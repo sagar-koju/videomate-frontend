@@ -40,14 +40,14 @@ export default function Homepage({ scrollRoot }: HomePageProps) {
       {Video?.map((video) => (
         <div key={video._id} className="m-1 p-2  flex flex-col shadow-md max-h-70 rounded-md border">
           <div className="relative w-full h-44 sm:h-40">
-            <Image src={video.thumbnail} alt={video.title} quality={10} fill className=" object-cover"/>
+            <Image src={video.thumbnail} alt={video.title} fill className=" object-cover"/>
             <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">
               {formatDuration(video.duration)}
             </div>
           </div>
           <div className="flex gap-2">
             <div className="relative h-14 w-14 mt-2">
-              <Image src={video.owner.avatar} alt="avatar" fill quality={10} className="object-cover overflow-hidden rounded-full border border-slate-300 p-0.5" />
+              <Image src={video.owner.avatar} alt="avatar" fill className="object-cover overflow-hidden rounded-full border border-slate-300 p-0.5" />
             </div>
             <div className="flex-1 flex-col mt-2">
               <h3 className="font-semibold line-clamp-2">{video.title}</h3>

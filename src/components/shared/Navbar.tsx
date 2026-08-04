@@ -1,17 +1,35 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Menu, Search, CircleUserRound, Settings } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useSidebar } from '@/providers/SidebarContext'
 import Link from 'next/link'
+import { useGetCurrentUser } from '@/hooks/useAuth'
+import {useRouter} from "next/navigation";
 
 const Navbar = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   const { toggleSidebar } = useSidebar()
 
-  const handleLogin = () => {
-    setLoggedIn(!loggedIn)
+  const { data: currentUser, isLoading, isError } = useGetCurrentUser();
+
+  if(!isLoading) {
+    console.log('Current User:', currentUser);
   }
+
+  const router = useRouter();
+
+  const handleLogin = () => {
+    router.push('/login');
+  }
+
+  useEffect(() => {
+    if (currentUser) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  }, [currentUser]);
 
   return (
     <nav className="fixed left-0 right-0 top-0 z-50 h-14 border-b border-slate-200 bg-white">
@@ -30,7 +48,7 @@ const Navbar = () => {
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-900" size={16} />
         </div>
 
-        {loggedIn ? (
+        {!isLoading && !isError && currentUser?.avatar ? (
           <Link href="/profile" className="flex items-center gap-4">
             <Settings className="text-slate-900" size={20} />
             <CircleUserRound className="text-slate-900 text-xs" size={25} />

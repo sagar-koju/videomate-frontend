@@ -42,7 +42,7 @@ const Sidebar = () => {
                             key={item.name}
                             href={item.href}
                             className={`cursor-pointer px-5 py-2 ${active ? 'bg-slate-200' : 'hover:bg-slate-100'}`}>
-                            <div className="flex shrink-0 items-center text-slate-700 gap-4">
+                            <div className="flex shrink-0 items-center text-slate-900 gap-4">
                                 <span className="flex shrink-0 items-center">
                                     <Icon size={20} />
                                 </span>

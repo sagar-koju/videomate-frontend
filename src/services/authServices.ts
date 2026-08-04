@@ -32,5 +32,10 @@ export const authServices = {
     async changePassword(oldPassword: string, newPassword: string) {
         const response = await apiClient.post(endpoints.auth.changePassword, { oldPassword, newPassword })
         return response.data
+    },
+
+    async getCurrentUser() {
+        const response = await apiClient.get(endpoints.auth.getCurrentUser);
+        return response.data;
     }
 }

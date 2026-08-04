@@ -45,11 +45,11 @@ export default function Homepage({ scrollRoot }: HomePageProps) {
               {formatDuration(video.duration)}
             </div>
           </div>
-          <div className="flex gap-2">
-            <div className="relative h-14 w-14 mt-2">
+          <div className="flex gap-2 py-2">
+            <div className="relative h-14 w-14">
               <Image src={video.owner.avatar} alt="avatar" fill className="object-cover overflow-hidden rounded-full border border-slate-300 p-0.5" />
             </div>
-            <div className="flex-1 flex-col mt-2">
+            <div className="flex-1 flex-col">
               <h3 className="font-semibold line-clamp-2">{video.title}</h3>
               <p className="text-sm text-gray-600 line-clamp-2">{video.owner.fullName}</p>
               <p className="text-sm text-gray-600">{video.views} views • {timeAgo(video.createdAt)}</p>

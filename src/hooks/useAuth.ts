@@ -46,7 +46,7 @@ export const useRegister = () => {
 export const useGetCurrentUser = () => {
     return useQuery({
         queryKey: ['currentUser'],
-        queryFn: userServices.getCurrentUser,
+        queryFn: authServices.getCurrentUser,
         retry: false,
     })
 }

@@ -16,14 +16,11 @@ export const endpoints = {
         getChannel: '/users/channel/:username',
     },
 
-    dashboard: {
-        
-    },
-
     videos: {
         getHomeFeed: '/videos',// for non-logged in users
         getDashboardVideos: '/dashboard/videos',//only for logged in user
         getMyVideos: '/videos/me',
+        getChannelVideos: '/videos/channel/:userId',
         uploadVideos: '/videos/upload',
         getVideoById: '/videos/:videoId',
         togglePublishStatus: '/videos/:videoId/publish',

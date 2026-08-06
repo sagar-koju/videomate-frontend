@@ -103,8 +103,8 @@ const Navbar = () => {
               {openProfileDropdown && (
                 <div className="absolute right-0 top-12 w-70  rounded-md border border-slate-300 bg-white">
                   <div className="flex flex-col w-full h-full py-4">
-                    <div className="relative flex w-full justify-center items-center p-4">
-                      <div className="relative h-16 w-16">
+                    <div className="relative flex w-full justify-center items-center p-4 pb-1">
+                      <div className="relative h-20 w-20">
                         <Image
                           src={currentUser.data.avatar}
                           alt="Profile"

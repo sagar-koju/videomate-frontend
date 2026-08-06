@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect } from 'react'
 import { dummyVideos } from "@/types/data";
-import { useGetHomeFeed } from "@/hooks/useGetHomeFeed";
+import { useGetHomeFeed } from "@/hooks/useVideos";
 import { useInView } from "react-intersection-observer";
 import Skeleton from './Skeleton';
 import {formatDuration, timeAgo} from "@/lib/utils";

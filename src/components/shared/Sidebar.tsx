@@ -1,14 +1,24 @@
 'use client'
-import React, { useState, createContext } from 'react'
+import React, { useState } from 'react'
 import { Home, SquareUserRound, Flame, ThumbsUp, RotateCcwClock, SquarePlay, Clock, ListVideo, ArrowDownToLine } from 'lucide-react'
 import { useSidebar } from '@/providers/SidebarContext'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { useGetCurrentUser } from '@/hooks/useAuth'
 
 
-const menuItems = [
+
+
+const Sidebar = () => {
+    const pathname = usePathname();
+    const { data: currentUser, isLoading, isError } = useGetCurrentUser();
+
+    const { isOpen: isSidebarOpen } = useSidebar();
+    const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
+    const menuItems = [
     { name: 'Home', href: '/', icon: Home },
-    { name: 'Channel', href: '/channel', icon: SquareUserRound },
+    { name: 'Channel', href: `/channel/${currentUser?.data?.username??''}`, icon: SquareUserRound },
     { name: 'Trending', href: '/trending', icon: Flame },
     { name: 'Liked Videos', href: '/liked', icon: ThumbsUp },
     { name: 'History', href: '/history', icon: RotateCcwClock },
@@ -19,19 +29,8 @@ const menuItems = [
     { name: 'Subscriptions', href: '/subscriptions', icon: SquareUserRound },
 ]
 
-const Sidebar = () => {
-    const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleSidebar = () => {
-        setIsOpen(!isOpen);
-    }
-
-    const { isOpen: isSidebarOpen } = useSidebar();
-    const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
-
     return (
-        <aside className={`h-full ${isSidebarOpen ? 'w-50' : 'w-16 '} border-r border-slate-200 bg-white`}>
+        <aside className={`h-full py-4 ${isSidebarOpen ? 'w-48' : 'w-16 '} border-r border-slate-200 bg-white`}>
             <nav className={`flex h-full flex-col gap-1 overflow-y-auto ${isSidebarOpen ? '' : 'scrollbar-hide'}`}>
                 {menuItems.map((item) => {
                     const active = isActive(item.href);

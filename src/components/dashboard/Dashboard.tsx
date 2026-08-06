@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect } from 'react'
 import { dummyVideos } from "@/types/data";
-import { useGetHomeFeed } from "@/hooks/useGetHomeFeed";
+import { useGetHomeFeed } from "@/hooks/useVideos";
 import { useInView } from "react-intersection-observer";
 import Skeleton from '@/components/home/Skeleton';
 import {formatDuration, timeAgo} from "@/lib/utils";
@@ -36,11 +36,11 @@ export default function Homepage({ scrollRoot }: HomePageProps) {
         <p className="text-gray-500">Error loading videos. Please try again later.</p>
       </div>
     ) : (
-      <div className="h-full w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
+      <div className="h-full w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-1">
       {Video?.map((video) => (
-        <div key={video._id} className="m-1 p-2  flex flex-col shadow-md max-h-70 rounded-md border">
+        <div key={video._id} className="p-2 flex flex-col shadow-md max-h-70 rounded-md border">
           <div className="relative w-full h-44 sm:h-40">
-            <Image src={video.thumbnail} alt={video.title} fill className=" object-cover"/>
+            <Image src={video.thumbnail} alt={video.title} fill className=" object-cover rounded-md"/>
             <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">
               {formatDuration(video.duration)}
             </div>

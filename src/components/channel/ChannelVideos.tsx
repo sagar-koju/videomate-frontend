@@ -1,15 +1,26 @@
+'use client'
 import React from 'react'
-import {useParams} from 'next/navigation'
-import { useGetChannel } from '@/hooks/useUser'
+import { useGetChannelVideos } from '@/hooks/useVideos'
+import {useGetChannel} from "@/hooks/useUser";
+import VideoGrid from '@/components/video/VideoGrid'
+import { useParams } from 'next/navigation';
 
 const ChannelVideos = () => {
-    const params = useParams();
-    const username = params.username as string;
+  const {username} = useParams<{ username: string }>();
+  const {data:channel, isLoading: isChannelLoading} = useGetChannel(username);
+  const { data: videos, isLoading: isVideosLoading, isError } = useGetChannelVideos(channel?._id, { enabled: !!channel?._id });
 
+  const videoList = videos?.pages.flatMap(page => page.videos) || [];
 
   return (
     <div>
-      
+      {isChannelLoading || isVideosLoading ? (
+        <div>Loading...</div>
+      ) : isError ? (
+        <div>Error loading videos.</div>
+      ) : (
+        <VideoGrid videos={videoList} />
+      )}
     </div>
   )
 }

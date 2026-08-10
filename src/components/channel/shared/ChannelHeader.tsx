@@ -11,8 +11,6 @@ import ChannelTabs from './ChannelTabs';
 export default function ChannelHeader({ username }: { username: string }) {
     const { data: channelData, isLoading, isError } = useGetChannel(username);
 
-    console.log('Channel Data:', channelData);
-
     return (
         <div className='w-full'>
             {isLoading ? (
@@ -21,11 +19,11 @@ export default function ChannelHeader({ username }: { username: string }) {
                 <p>Error loading channel data.</p>
             ) : channelData ? (
                 <div className="flex flex-col w-full items-center justify-center max-w-300 px-4 md:px-8 lg:px-16 py-2">
-                    {channelData?.data?.coverImage && (
+                    {channelData?.coverImage && (
                         <div className="flex h-32 w-full max-w-250 items-center">
                             <div className="relative h-full w-full ">
                                 <Image
-                                    src={channelData.data.coverImage}
+                                    src={channelData.coverImage}
                                     alt="CoverImage"
                                     className="object-cover rounded-lg"
                                     fill
@@ -36,25 +34,25 @@ export default function ChannelHeader({ username }: { username: string }) {
                     <div className="flex py-2 items-center w-full max-w-250 gap-4">
                         <div className="relative h-24 w-24">
                             <Image
-                                src={channelData?.data?.avatar ?? '/assets/avatar.png'}
+                                src={channelData?.avatar ?? '/assets/avatar.png'}
                                 alt="Profile"
                                 className="rounded-full object-cover"
                                 fill
                             />
                         </div>
                         <div className="flex flex-col">
-                            <h2 className="text-3xl font-bold">{channelData?.data?.fullName}</h2>
+                            <h2 className="text-3xl font-bold">{channelData?.fullName}</h2>
                             <div className="flex gap-1 text-gray-600">
-                                <p>@{channelData?.data?.username}</p>
+                                <p>@{channelData?.username}</p>
                                 .
-                                <span>{formatNumber(channelData?.data?.subscriberCount)} subscribers</span>
+                                <span>{formatNumber(channelData?.subscriberCount)} subscribers</span>
                             </div>
-                            <span className="text-gray-600 text-sm">Joined in {dateFormatter(channelData?.data?.createdAt)}</span>
+                            <span className="text-gray-600 text-sm">Joined in {dateFormatter(channelData?.createdAt)}</span>
                         </div>
                     </div>
 
                     <div className="flex py-2 items-center w-full max-w-250 gap-4">
-                        {username === channelData?.data?.username ? (
+                        {username === channelData?.username ? (
                            <div className="flex flex-col w-full gap-2 py-4">
                              <div className="flex w-full justify-between items-center gap-2">
                                 <button className="flex-1 px-4 py-2 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition-colors max-w-100">
@@ -72,7 +70,7 @@ export default function ChannelHeader({ username }: { username: string }) {
                             <div className="flex flex-col w-full gap-2 py-4">
                                 <div className="flex items-center justify-between w-full gap-4">
                                 <button className="flex-1 px-4 py-2 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition-colors max-w-100">
-                                    {channelData?.data?.isSubscribed ? (
+                                    {channelData?.isSubscribed ? (
                                         <div className="flex items-center gap-2 justify-center">
                                             <Bell size={20} />
                                             <span>Subscribed</span>

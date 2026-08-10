@@ -1,10 +1,10 @@
+import EmptyPage from '@/components/channel/Home'
 import React from 'react'
 
 const page = () => {
-  const activeTab = 'home' // Set the active tab to 'videos'
   return (
     <div>
-      
+      <EmptyPage />
     </div>
   )
 }

@@ -18,7 +18,11 @@ apiClient.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        const isAuthRequest = originalRequest.url?.includes('/login') || 
+        originalRequest.url?.includes('/register') ||
+        originalRequest.url?.includes('/refresh-token');
+
+        if (error.response?.status === 401 && !originalRequest._retry && !isAuthRequest) {
             if (isRefreshing) {
                 // queue requests that come in while a refresh is already in progress
                 return new Promise((resolve, reject) => {
@@ -36,7 +40,10 @@ apiClient.interceptors.response.use(
             } catch (refreshError) {
                 processQueue(refreshError)
                 // refresh failed too — refresh token is actually expired/invalid, force logout
-                window.location.href = '/login'
+                const publicPaths = ['/login', '/register']
+                if (!publicPaths.includes(window.location.pathname)) {
+                    window.location.href = '/login'
+                }
                 return Promise.reject(refreshError)
             } finally {
                 isRefreshing = false

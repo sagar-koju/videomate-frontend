@@ -6,9 +6,6 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useGetCurrentUser } from '@/hooks/useAuth'
 
-
-
-
 const Sidebar = () => {
     const pathname = usePathname();
     const { data: currentUser, isLoading, isError } = useGetCurrentUser();
@@ -17,7 +14,7 @@ const Sidebar = () => {
     const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
     const menuItems = [
-    { name: 'Home', href: '/', icon: Home },
+    { name: 'Home', href: currentUser?.data ? "/dashboard" : "/", icon: Home },
     { name: 'Channel', href: `/channel/${currentUser?.data?.username??''}`, icon: SquareUserRound },
     { name: 'Trending', href: '/trending', icon: Flame },
     { name: 'Liked Videos', href: '/liked', icon: ThumbsUp },

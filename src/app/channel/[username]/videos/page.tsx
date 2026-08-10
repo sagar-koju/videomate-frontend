@@ -1,9 +1,10 @@
+import ChannelVideos from '@/components/channel/ChannelVideos'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>
-      
+    <div className="w-full">
+      <ChannelVideos />
     </div>
   )
 }

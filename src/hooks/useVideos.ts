@@ -1,4 +1,4 @@
-import {useInfiniteQuery} from "@tanstack/react-query";
+import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {videoServices} from "@/services/videoServices";
 
 export const useGetHomeFeed = () => {
@@ -29,7 +29,7 @@ export const useGetDashboardVideos = () => {
     });
 }
 
-export const useGetChannelVideos = (userId: string) => {
+export const useGetChannelVideos = (userId: string, { enabled }: { enabled: boolean }) => {
     return useInfiniteQuery({
         queryKey: ['channelVideos', userId],
         queryFn: ({pageParam}) => videoServices.getChannelVideos({userId, limit: 10, cursor: pageParam}),
@@ -38,7 +38,15 @@ export const useGetChannelVideos = (userId: string) => {
             return lastPage.hasMore ? lastPage.nextCursor : undefined;
         },
         staleTime: 1000 * 60 * 5, // 5 minutes
-        refetchOnMount: true,
-        retry: false,
+        enabled: enabled,
     });
+}
+
+export const useGetVideoById = (videoId: string) => {
+    return useQuery({
+        queryKey: ['video', videoId],
+        queryFn: () => videoServices.getVideoById(videoId),
+        enabled: !!videoId,
+        staleTime: 1000 * 60 * 5, // 5 minutes
+    })
 }

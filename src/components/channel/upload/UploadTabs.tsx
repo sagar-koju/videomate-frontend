@@ -4,12 +4,11 @@ import { usePathname } from 'next/navigation'
 import { useGetChannel } from '@/hooks/useUser'
 import Link from 'next/link'
 
-export default function ChannelTabs({ username }: { username: string }) {
+export default function UploadTabs() {
     const pathname = usePathname();
-    const basePath = `/channel/${username}`;
+    const basePath = `/upload`;
 
     const tabs = [
-        { name: 'Home', href: "" },
         { name: 'Videos', href: `/videos` },
         { name: 'Playlists', href: `/playlists` },
         { name: 'Shorts', href: `/shorts` },
@@ -19,11 +18,11 @@ export default function ChannelTabs({ username }: { username: string }) {
 
     return (
         <nav className="w-full">
-            <div className="flex w-full items-center justify-center max-w-300 px-4 md:px-8 lg:px-16 py-2">
+            <div className="flex w-full items-center justify-center max-w-300 px-6">
                 <div className="flex w-full max-w-250 items-center">
                     {tabs.map((tab) => {
                         const href = `${basePath}${tab.href}`;
-                        const isActive = tab.href === "" 
+                        const isActive = tab.href === "Videos" 
                         ? pathname === basePath 
                         : pathname === href || pathname.startsWith(`${href}/`);
 

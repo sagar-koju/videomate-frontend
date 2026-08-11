@@ -19,7 +19,7 @@ const Sidebar = () => {
     { name: 'Trending', href: '/trending', icon: Flame },
     { name: 'Liked Videos', href: '/liked', icon: ThumbsUp },
     { name: 'History', href: '/history', icon: RotateCcwClock },
-    { name: 'Your Videos', href: '/your-videos', icon: SquarePlay },
+    { name: 'Your Videos', href: '/upload/videos', icon: SquarePlay },
     { name: 'Watch Later', href: '/watch-later', icon: Clock },
     { name: 'Playlists', href: '/playlists', icon: ListVideo },
     { name: 'Downloads', href: '/downloads', icon: ArrowDownToLine },

@@ -50,3 +50,15 @@ export const useGetVideoById = (videoId: string) => {
         staleTime: 1000 * 60 * 5, // 5 minutes
     })
 }
+
+export const useGetMyVideos = () => {
+    return useInfiniteQuery({
+        queryKey: ['myVideos'],
+        queryFn: ({pageParam}) => videoServices.getMyVideos({limit: 10, cursor: pageParam}),
+        initialPageParam: undefined,
+        getNextPageParam: (lastPage) => {
+            return lastPage.hasMore ? lastPage.nextCursor : undefined;
+        },
+        staleTime: 0,
+    })
+}

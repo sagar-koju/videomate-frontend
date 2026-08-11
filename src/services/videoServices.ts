@@ -23,5 +23,11 @@ export const videoServices = {
     async getVideoById(videoId: string) {
         const response = await apiClient.get(endpoints.videos.getVideoById.replace(':videoId', videoId));
         return response.data.data;
+    },
+
+    async getMyVideos({ limit, cursor }: { limit?: number, cursor?: string }) {
+        const params = { limit, ...(cursor && { cursor }) };
+        const response = await apiClient.get(endpoints.videos.getMyVideos, { params });
+        return response.data.data;
     }
 }

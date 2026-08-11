@@ -18,8 +18,8 @@ export default function UploadTabs() {
 
     return (
         <nav className="w-full">
-            <div className="flex w-full items-center justify-center max-w-300 px-6">
-                <div className="flex w-full max-w-250 items-center">
+            <div className="flex w-full items-center justify-center px-6">
+                <div className="flex w-full items-center">
                     {tabs.map((tab) => {
                         const href = `${basePath}${tab.href}`;
                         const isActive = tab.href === "Videos" 

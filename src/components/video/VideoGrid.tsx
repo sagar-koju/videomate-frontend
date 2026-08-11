@@ -1,7 +1,6 @@
 import React from 'react'
-import VideoCard, {Video} from './VideoCard'
-
-
+import VideoCard from './VideoCard'
+import { Video } from '@/types/video'
 
 export default function VideoGrid( {videos}: {videos: Video[]}) {
   if (!videos || videos.length === 0) {

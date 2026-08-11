@@ -2,20 +2,21 @@ import { formatDuration, formatNumber, timeAgo } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
+import { Video } from '@/types/video';
 
-export interface Video {
-    id: string;
-    title: string;
-    description: string;
-    videoFile: string;
-    thumbnail: string;
-    owner: string;
-    createdAt: string;
-    updatedAt: string;
-    likesCount: number;
-    views: number;
-    duration: number;
-}
+// export interface Video {
+//     id: string;
+//     title: string;
+//     description: string;
+//     videoFile: string;
+//     thumbnail: string;
+//     owner: string;
+//     createdAt: string;
+//     updatedAt: string;
+//     likesCount: number;
+//     views: number;
+//     duration: number;
+// }
 
 const VideoCard = ({ video }: { video: Video }) => {
     return (

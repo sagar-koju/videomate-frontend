@@ -1,9 +1,11 @@
 import React from 'react'
+import VideoPage from '@/components/upload/VideoPage'
+
 
 const page = () => {
   return (
     <div>
-      comming soon...
+      <VideoPage />
     </div>
   )
 }

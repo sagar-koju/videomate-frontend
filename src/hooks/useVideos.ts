@@ -1,5 +1,7 @@
-import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
+import {useInfiniteQuery, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {videoServices} from "@/services/videoServices";
+import { useCallback, useRef, useState } from "react";
+import { abort } from "process";
 
 export const useGetHomeFeed = () => {
     return useInfiniteQuery({
@@ -61,4 +63,43 @@ export const useGetMyVideos = () => {
         },
         staleTime: 0,
     })
+}
+
+export const useUploadVideo = () => {
+    const [progress, setProgress] = useState(0);
+    const queryClient = useQueryClient();
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    const mutation = useMutation({
+        mutationFn: (formData: FormData) => {
+            abortControllerRef.current = new AbortController();
+            return videoServices.uploadVideo(formData, (percent) => 
+                setProgress(percent),
+            abortControllerRef.current.signal
+            );
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['myVideos'] });
+            queryClient.invalidateQueries({ queryKey: ['dashboardVideos'] });
+            queryClient.invalidateQueries({ queryKey: ['channelVideos'] });
+        },
+        onSettled: () => {
+            setProgress(0);
+            abortControllerRef.current = null;
+        },
+    });
+
+    const cancleUpload = useCallback(() => {
+        abortControllerRef.current?.abort();
+    }, []);
+
+    return {
+        uploadVideoMutation: mutation,
+        cancleUpload,
+        isUploading: mutation.isPending,
+        isError: mutation.isError,
+        error: mutation.error,
+        isSuccess: mutation.isSuccess,
+        progress,
+    }
 }

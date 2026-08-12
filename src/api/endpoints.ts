@@ -21,7 +21,7 @@ export const endpoints = {
         getDashboardVideos: '/dashboard/videos',//only for logged in user
         getMyVideos: '/videos/me',
         getChannelVideos: '/videos/channel/:userId',
-        uploadVideos: '/videos/upload',
+        uploadVideo: '/videos/upload',
         getVideoById: '/videos/:videoId',
         togglePublishStatus: '/videos/:videoId/publish',
         getLikedVideos: '/videos/liked',

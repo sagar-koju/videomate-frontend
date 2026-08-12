@@ -29,5 +29,22 @@ export const videoServices = {
         const params = { limit, ...(cursor && { cursor }) };
         const response = await apiClient.get(endpoints.videos.getMyVideos, { params });
         return response.data.data;
+    },
+
+    async uploadVideo(
+        formData: FormData, 
+        onProgress?: (percent: number) => void,
+        signal?: AbortSignal
+    ) {
+        const response = await apiClient.post(endpoints.videos.uploadVideo, formData, {
+            onUploadProgress: (progressEvent) => {
+                if (progressEvent.total) {
+                    const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    onProgress?.(percent);
+                }
+            },
+            signal,
+        });
+        return response.data.data;
     }
 }

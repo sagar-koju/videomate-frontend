@@ -1,12 +1,11 @@
-import {useInfiniteQuery, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {videoServices} from "@/services/videoServices";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { videoServices } from "@/services/videoServices";
 import { useCallback, useRef, useState } from "react";
-import { abort } from "process";
 
 export const useGetHomeFeed = () => {
     return useInfiniteQuery({
         queryKey: ['homeFeed'],
-        queryFn: ({pageParam}) => videoServices.getHomeFeed({limit: 10, cursor: pageParam}),
+        queryFn: ({ pageParam }) => videoServices.getHomeFeed({ limit: 10, cursor: pageParam }),
         initialPageParam: undefined,
         getNextPageParam: (lastPage) => {
             return lastPage.hasMore ? lastPage.nextCursor : undefined;
@@ -20,7 +19,7 @@ export const useGetHomeFeed = () => {
 export const useGetDashboardVideos = () => {
     return useInfiniteQuery({
         queryKey: ['dashboardVideos'],
-        queryFn: ({pageParam}) => videoServices.getDashboardVideos({limit: 10, cursor: pageParam}),
+        queryFn: ({ pageParam }) => videoServices.getDashboardVideos({ limit: 10, cursor: pageParam }),
         initialPageParam: undefined,
         getNextPageParam: (lastPage) => {
             return lastPage.hasMore ? lastPage.nextCursor : undefined;
@@ -34,7 +33,7 @@ export const useGetDashboardVideos = () => {
 export const useGetChannelVideos = (userId: string, { enabled }: { enabled: boolean }) => {
     return useInfiniteQuery({
         queryKey: ['channelVideos', userId],
-        queryFn: ({pageParam}) => videoServices.getChannelVideos({userId, limit: 10, cursor: pageParam}),
+        queryFn: ({ pageParam }) => videoServices.getChannelVideos({ userId, limit: 10, cursor: pageParam }),
         initialPageParam: undefined,
         getNextPageParam: (lastPage) => {
             return lastPage.hasMore ? lastPage.nextCursor : undefined;
@@ -56,7 +55,7 @@ export const useGetVideoById = (videoId: string) => {
 export const useGetMyVideos = () => {
     return useInfiniteQuery({
         queryKey: ['myVideos'],
-        queryFn: ({pageParam}) => videoServices.getMyVideos({limit: 10, cursor: pageParam}),
+        queryFn: ({ pageParam }) => videoServices.getMyVideos({ limit: 10, cursor: pageParam }),
         initialPageParam: undefined,
         getNextPageParam: (lastPage) => {
             return lastPage.hasMore ? lastPage.nextCursor : undefined;
@@ -73,9 +72,9 @@ export const useUploadVideo = () => {
     const mutation = useMutation({
         mutationFn: (formData: FormData) => {
             abortControllerRef.current = new AbortController();
-            return videoServices.uploadVideo(formData, (percent) => 
+            return videoServices.uploadVideo(formData, (percent) =>
                 setProgress(percent),
-            abortControllerRef.current.signal
+                abortControllerRef.current.signal
             );
         },
         onSuccess: () => {
@@ -102,4 +101,28 @@ export const useUploadVideo = () => {
         isSuccess: mutation.isSuccess,
         progress,
     }
+}
+
+export const useToggleVideoPublishStatus = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (videoId: string) => {
+            console.log('useToggleVideoPublishStatus mutationFn called with videoId:', videoId);
+            return videoServices.toggleVideoPublishStatus(videoId)
+        },
+        onMutate: async (videoId: string) => {
+            await queryClient.cancelQueries({ queryKey: ['myVideos'] })
+            return { previousVideos: queryClient.getQueryData(['myVideos'])}
+        },
+        onError: (err, videoId, context) => {
+            if (context?.previousVideos) {
+                queryClient.setQueryData(['myVideos'], context.previousVideos)
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['myVideos'] });
+            queryClient.invalidateQueries({ queryKey: ['dashboardVideos'] });
+            queryClient.invalidateQueries({ queryKey: ['channelVideos'] });
+        },
+    })
 }

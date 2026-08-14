@@ -46,5 +46,10 @@ export const videoServices = {
             signal,
         });
         return response.data.data;
-    }
+    },
+
+    async toggleVideoPublishStatus(videoId: string) {
+        const response = await apiClient.patch(endpoints.videos.toggleVideoPublishStatus.replace(':videoId', videoId));
+        return response.data.data;
+    },
 }

@@ -1,22 +1,20 @@
 'use client'
 import React, { useEffect } from 'react'
-import { dummyVideos } from "@/types/data";
-import { useGetHomeFeed } from "@/hooks/useVideos";
+import { useGetDashboardVideos } from "@/hooks/useVideos";
 import { useInView } from "react-intersection-observer";
 import Skeleton from '@/components/home/Skeleton';
 import { formatDuration, timeAgo } from "@/lib/utils";
 import Image from 'next/image';
 import Link from 'next/link';
-import router from 'next/dist/shared/lib/router/router';
 import { useRouter } from 'next/navigation';
 
-type HomePageProps = {
+type DashboardPageProps = {
   scrollRoot: HTMLElement | null;
 }
 
-export default function Homepage({ scrollRoot }: HomePageProps) {
+export default function DashboardPage({ scrollRoot }: DashboardPageProps) {
   const router = useRouter();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = useGetHomeFeed();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = useGetDashboardVideos();
   const Video = data?.pages.flatMap(page => page.videos);
 
   const { ref, inView } = useInView({

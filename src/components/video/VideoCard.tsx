@@ -4,24 +4,10 @@ import Link from 'next/link';
 import React from 'react'
 import { Video } from '@/types/video';
 
-// export interface Video {
-//     id: string;
-//     title: string;
-//     description: string;
-//     videoFile: string;
-//     thumbnail: string;
-//     owner: string;
-//     createdAt: string;
-//     updatedAt: string;
-//     likesCount: number;
-//     views: number;
-//     duration: number;
-// }
-
 const VideoCard = ({ video }: { video: Video }) => {
     return (
         <div>
-            <Link href={`/watch/${video.id}`} className="group block shadow-md p-2 rounded-md">
+            <Link href={`/watch?v=${video._id}`} className="group block shadow-md p-2 rounded-md">
                 <div className="relative w-full aspect-video rounded-md overflow-hidden bg-gray-200">
                     <Image
                         src={video.thumbnail}
@@ -36,7 +22,7 @@ const VideoCard = ({ video }: { video: Video }) => {
                 </div>
 
                 <div className="mt-2">
-                    <h3 className="text-lg font-semibold line-clamp-2 leading-snug group-hover:text-black">
+                    <h3 className="text-lg font-semibold line-clamp-1 group-hover:text-black">
                         {video.title}
                     </h3>
                     <p className="text-sm text-gray-500 mt-1">

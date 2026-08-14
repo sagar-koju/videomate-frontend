@@ -23,7 +23,7 @@ export const endpoints = {
         getChannelVideos: '/videos/channel/:userId',
         uploadVideo: '/videos/upload',
         getVideoById: '/videos/:videoId',
-        togglePublishStatus: '/videos/:videoId/publish',
+        toggleVideoPublishStatus: '/videos/:videoId/publish',
         getLikedVideos: '/videos/liked',
         deleteVideo: '/videos/:videoId',
     },

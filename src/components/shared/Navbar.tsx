@@ -91,6 +91,7 @@ const Navbar = () => {
                     alt="Profile"
                     className="rounded-full object-cover"
                     fill
+                    sizes='80px'
                   />
                 </div>
               ) : (
@@ -106,6 +107,7 @@ const Navbar = () => {
                           alt="Profile"
                           className="rounded-full object-cover"
                           fill
+                          sizes='150px'
                         />
                       </div>
                     </div>

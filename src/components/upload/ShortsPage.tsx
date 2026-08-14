@@ -2,7 +2,7 @@
 import { Plus } from 'lucide-react'
 import React, { useState } from 'react'
 import { useGetMyVideos } from '@/hooks/useVideos'
-import VideoList from '../video/VideoList'
+import ShortsList from '@/components/shorts/ShortsList'
 import VideoUploadForm from './VideoUploadForm'
 
 const tabs = [
@@ -13,7 +13,7 @@ const tabs = [
     { name: 'Likes', key: 'likes' }
 ]
 
-const VideoPage = () => {
+const ShortsPage = () => {
     const { data: videos, isLoading, isError } = useGetMyVideos();
     const videoList = videos?.pages.flatMap(page => page.videos) || [];
     const [isUploadOpen, setIsUploadOpen] = useState(false)
@@ -51,11 +51,11 @@ const VideoPage = () => {
                         <p className="text-sm text-gray-600">You haven't uploaded any videos yet.</p>
                     </div>
                 ) : (
-                    <VideoList videos={videoList} />
+                    <ShortsList video={videoList} />
                 )}
             </div>
         </div>
     )
 }
 
-export default VideoPage
+export default ShortsPage

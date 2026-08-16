@@ -2,8 +2,8 @@
 import { Plus } from 'lucide-react'
 import React, { useState } from 'react'
 import { useGetMyVideos } from '@/hooks/useVideos'
-import VideoList from '../video/VideoList'
-import VideoUploadForm from './VideoUploadForm'
+import VideoList from '../../video/VideoList'
+import PlaylistForm from './PlaylistForm'
 
 const tabs = [
     { name: 'Visibility', key: 'visibility' },
@@ -13,7 +13,7 @@ const tabs = [
     { name: 'Likes', key: 'likes' }
 ]
 
-const VideoPage = () => {
+const PlaylistPage = () => {
     const { data: videos, isLoading, isError } = useGetMyVideos();
     const videoList = videos?.pages.flatMap(page => page.videos) || [];
     const [isUploadOpen, setIsUploadOpen] = useState(false)
@@ -35,7 +35,7 @@ const VideoPage = () => {
 
             </div>
 
-            <VideoUploadForm
+            <PlaylistForm
                 isOpen={isUploadOpen}
                 onClose={() => setIsUploadOpen(false)}
             />
@@ -58,4 +58,4 @@ const VideoPage = () => {
     )
 }
 
-export default VideoPage
+export default PlaylistPage

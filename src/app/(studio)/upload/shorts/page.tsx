@@ -1,4 +1,4 @@
-import ShortsPage from '@/components/upload/ShortsPage'
+import ShortsPage from '@/components/upload/shorts/ShortsPage'
 import React from 'react'
 
 const page = () => {

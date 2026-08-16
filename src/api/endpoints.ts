@@ -34,4 +34,13 @@ export const endpoints = {
         editComment: '/comments/:commentId',
         replyToComment: '/comments/:commentId/reply',
     },
+
+    playlists: {
+        create: '/playlists',
+        getPlaylistById: '/playlists/:playlistId',
+        deletePlaylist: '/playlists/:playlistId',
+        removeVideoFromPlaylist: '/playlists/:playlistId/videos/:videoId',
+        togglePlaylistVisibility: '/playlists/:playlistId/visibility',
+        getUserPlaylists: '/playlists/user/:userId',
+    }
 }

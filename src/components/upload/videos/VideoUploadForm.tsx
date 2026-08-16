@@ -7,10 +7,6 @@ import { useUploadVideo } from '@/hooks/useVideos';
 interface VideoUploadFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onUploadSuccess?: (response: any) => void;
-  onUploadError?: (error: any) => void;
-  // Optional custom upload handler: receives FormData and an optional progress callback, returns a Promise that resolves with the response
-  uploadFunction?: (formData: FormData, onProgress?: (pct: number) => void) => Promise<any>;
 }
 
 export default function VideoUploadForm({ isOpen, onClose }: VideoUploadFormProps) {

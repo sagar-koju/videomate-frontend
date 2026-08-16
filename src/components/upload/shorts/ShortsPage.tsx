@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react'
 import React, { useState } from 'react'
 import { useGetMyVideos } from '@/hooks/useVideos'
 import ShortsList from '@/components/shorts/ShortsList'
-import VideoUploadForm from './VideoUploadForm'
+import VideoUploadForm from '@/components/upload/videos/VideoUploadForm'
 
 const tabs = [
     { name: 'Visibility', key: 'visibility' },

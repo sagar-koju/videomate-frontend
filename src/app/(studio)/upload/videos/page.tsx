@@ -1,5 +1,5 @@
 import React from 'react'
-import VideoPage from '@/components/upload/VideoPage'
+import VideoPage from '@/components/upload/videos/VideoPage'
 
 
 const page = () => {

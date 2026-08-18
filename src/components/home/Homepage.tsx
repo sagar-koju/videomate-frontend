@@ -8,6 +8,7 @@ import { formatDuration, timeAgo } from "@/lib/utils";
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import VideoCard from '../video/VideoCard';
 
 type HomePageProps = {
   scrollRoot: HTMLElement | null;
@@ -41,37 +42,7 @@ export default function Homepage({ scrollRoot }: HomePageProps) {
       ) : (
         <div className="h-full w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
           {Video?.map((video) => (
-            <div
-              onClick={() => router.push(`/watch?v=${video._id}`)}
-              key={video._id}
-              className="group m-1 p-2  flex flex-col hover:shadow-md max-h-70 rounded-md border">
-              <div className="relative w-full h-44 sm:h-40 overflow-hidden">
-                <Image src={video.thumbnail} alt={video.title} fill className=" object-cover group-hover:scale-[1.02] transition-transform duration-200" />
-                <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">
-                  {formatDuration(video.duration)}
-                </div>
-              </div>
-              <div className="flex gap-2 py-2">
-                <Link
-                  href={`/channel/${video.owner.username}`}
-                  onClick={(e) => e.stopPropagation()}
-                  className="relative h-14 w-14">
-                  <Image src={video.owner.avatar} alt="avatar" fill className="object-cover overflow-hidden rounded-full border border-slate-300 p-0.5" />
-                </Link>
-                <div className="flex-1 flex-col">
-                  <h3 className="font-semibold line-clamp-2">{video.title}</h3>
-                  <div className="flex">
-                    <Link
-                      href={`/channel/${video.owner.username}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="text-sm text-gray-600 line-clamp-2">
-                      {video.owner.fullName}
-                    </Link>
-                  </div>
-                  <p className="text-sm text-gray-600">{video.views} views • {timeAgo(video.createdAt)}</p>
-                </div>
-              </div>
-            </div>
+            <VideoCard key={video._id} video={video} />
           ))}
         </div>
       )}

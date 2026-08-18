@@ -52,4 +52,9 @@ export const videoServices = {
         const response = await apiClient.patch(endpoints.videos.toggleVideoPublishStatus.replace(':videoId', videoId));
         return response.data.data;
     },
+
+    async deleteVideo(videoId: string) {
+        const response = await apiClient.delete(endpoints.videos.deleteVideo.replace(':videoId', videoId));
+        return response.data.data;
+    },
 }

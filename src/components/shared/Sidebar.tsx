@@ -16,12 +16,12 @@ const Sidebar = () => {
     const menuItems = [
     { name: 'Home', href: currentUser?.data ? "/dashboard" : "/", icon: Home },
     { name: 'Channel', href: `/channel/${currentUser?.data?.username??''}`, icon: SquareUserRound },
+    { name: 'Your Videos', href: '/upload/videos', icon: SquarePlay },
+    { name: 'Playlists', href: '/upload/playlists', icon: ListVideo },
     { name: 'Trending', href: '/trending', icon: Flame },
     { name: 'Liked Videos', href: '/liked', icon: ThumbsUp },
     { name: 'History', href: '/history', icon: RotateCcwClock },
-    { name: 'Your Videos', href: '/upload/videos', icon: SquarePlay },
     { name: 'Watch Later', href: '/watch-later', icon: Clock },
-    { name: 'Playlists', href: '/playlists', icon: ListVideo },
     { name: 'Downloads', href: '/downloads', icon: ArrowDownToLine },
     { name: 'Subscriptions', href: '/subscriptions', icon: SquareUserRound },
 ]

@@ -62,7 +62,7 @@ export default function VideoBox() {
                     </div>
                     <div className="flex flex-col gap-2 py-4">
                         <h1 className="text-xl text-left font-bold line-clamp-2">{videoData?.title}</h1>
-                        <div className="w-full flex flex-col sm:flex-row gap-4 justify-between border-y py-4 ">
+                        <div className="w-full flex flex-col md:flex-row gap-4 justify-between border-y py-4 ">
                             <div className="flex gap-4 items-center">
                                 <div className="relative h-14 w-14 rounded-full ">
                                     <Image
@@ -74,7 +74,7 @@ export default function VideoBox() {
                                         />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="font-semibold">{videoData?.owner.username || 'User'}</span>
+                                    <span className="font-semibold">{videoData?.owner.fullName || 'User'}</span>
                                     <span className="text-sm text-gray-500">{videoData?.owner.subscribers || 0} subscribers</span>
                                 </div>
                                 <button className="ml-4 px-4 py-2  bg-red-600 text-white rounded-full hover:bg-red-700">

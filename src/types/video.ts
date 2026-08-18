@@ -4,7 +4,11 @@ export interface Video {
     description: string;
     videoFile: string;
     thumbnail: string;
-    owner: string;
+    owner: { 
+        username: string; 
+        fullName: string; 
+        avatar: string 
+    };
     createdAt: string;
     updatedAt: string;
     likesCount: number;

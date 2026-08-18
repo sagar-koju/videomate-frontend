@@ -1,5 +1,5 @@
 import React from 'react'
-import VideoCard from './VideoCard'
+import ChannelVideoCard from './ChannelVideoCard'
 import { Video } from '@/types/video'
 
 export default function VideoGrid( {videos}: {videos: Video[]}) {
@@ -12,9 +12,9 @@ export default function VideoGrid( {videos}: {videos: Video[]}) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-1 sm:grid-cols-2  lg:grid-cols-3">
       {videos?.map((video) => (
-        <VideoCard key={video._id} video={video} />
+        <ChannelVideoCard key={video._id} video={video} />
       ))}
     </div>
   )

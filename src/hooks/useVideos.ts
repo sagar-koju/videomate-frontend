@@ -107,10 +107,32 @@ export const useToggleVideoPublishStatus = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: (videoId: string) => {
-            console.log('useToggleVideoPublishStatus mutationFn called with videoId:', videoId);
             return videoServices.toggleVideoPublishStatus(videoId)
         },
-        onMutate: async (videoId: string) => {
+        onMutate: async () => {
+            await queryClient.cancelQueries({ queryKey: ['myVideos'] })
+            return { previousVideos: queryClient.getQueryData(['myVideos'])}
+        },
+        onError: (err, videoId, context) => {
+            if (context?.previousVideos) {
+                queryClient.setQueryData(['myVideos'], context.previousVideos)
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['myVideos'] });
+            queryClient.invalidateQueries({ queryKey: ['dashboardVideos'] });
+            queryClient.invalidateQueries({ queryKey: ['channelVideos'] });
+        },
+    })
+}
+
+export const useDeleteVideo = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (videoId: string) => {
+            return videoServices.deleteVideo(videoId)
+        },
+        onMutate: async () => {
             await queryClient.cancelQueries({ queryKey: ['myVideos'] })
             return { previousVideos: queryClient.getQueryData(['myVideos'])}
         },

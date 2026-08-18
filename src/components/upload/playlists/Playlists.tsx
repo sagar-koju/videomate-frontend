@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
-import { dateFormatter, formatDuration, formatNumber } from '@/lib/utils'
+import { dateFormatter} from '@/lib/utils'
 import { ChevronDown, Copy, Download, Edit, ListVideo, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { Playlist } from '@/types/playlist'

@@ -54,7 +54,7 @@ const VideoCard = ({ video }: { video: Video }) => {
                     fill
                     sizes='400px'
                     className=" object-cover rounded-md" />
-                <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">
+                <div className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-1.5 py-0.5 rounded">
                     {formatDuration(video.duration)}
                 </div>
             </div>
@@ -62,13 +62,13 @@ const VideoCard = ({ video }: { video: Video }) => {
                 <Link
                     href={`/channel/${video.owner.username}`}
                     onClick={(e) => e.stopPropagation()}
-                    className="relative h-12 w-12">
+                    className="relative h-10 w-10">
                     <Image
                         src={video.owner.avatar}
                         alt="avatar"
                         fill
-                        sizes='150px'
-                        className="object-cover overflow-hidden rounded-full border border-slate-300 p-0.5" />
+                        sizes='100px'
+                        className="object-cover overflow-hidden rounded-full" />
                 </Link>
                 <div className="flex-1 flex-col">
                     <h3 className="font-semibold line-clamp-2 leading-4.5">{video.title}</h3>

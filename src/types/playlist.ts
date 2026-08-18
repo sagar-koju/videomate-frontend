@@ -9,6 +9,7 @@ export type Playlist = {
     owner: {
         _id: string;
         username: string;
+        fullName: string;
         avatar: string;
     }
     videoCount: number;

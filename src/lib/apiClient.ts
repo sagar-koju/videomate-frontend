@@ -20,9 +20,17 @@ apiClient.interceptors.response.use(
 
         const isAuthRequest = originalRequest.url?.includes('/login') || 
         originalRequest.url?.includes('/register') ||
-        originalRequest.url?.includes('/refresh-token');
+        originalRequest.url?.includes('/refresh-token') ||
+        originalRequest.url?.includes('/auth/me');
 
-        if (error.response?.status === 401 && !originalRequest._retry && !isAuthRequest) {
+        const publicPaths = ['/', '/login', '/register'];
+
+        if (
+            error.response?.status === 401 && 
+            !originalRequest._retry && 
+            !isAuthRequest &&
+            !publicPaths.includes(window.location.pathname)
+        ) {
             if (isRefreshing) {
                 // queue requests that come in while a refresh is already in progress
                 return new Promise((resolve, reject) => {

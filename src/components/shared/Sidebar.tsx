@@ -14,8 +14,8 @@ const Sidebar = () => {
     const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
     const menuItems = [
-    { name: 'Home', href: currentUser?.data ? "/dashboard" : "/", icon: Home },
-    { name: 'Channel', href: `/channel/${currentUser?.data?.username??''}`, icon: SquareUserRound },
+    { name: 'Home', href: currentUser? "/dashboard" : "/", icon: Home },
+    { name: 'Channel', href: `/channel/${currentUser?.username??''}`, icon: SquareUserRound },
     { name: 'Your Videos', href: '/upload/videos', icon: SquarePlay },
     { name: 'Playlists', href: '/upload/playlists', icon: ListVideo },
     { name: 'Trending', href: '/trending', icon: Flame },

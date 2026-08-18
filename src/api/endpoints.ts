@@ -41,7 +41,7 @@ export const endpoints = {
         deletePlaylist: '/playlists/:playlistId',
         removeVideoFromPlaylist: '/playlists/:playlistId/videos/:videoId',
         togglePlaylistVisibility: '/playlists/:playlistId/visibility',
-        getUserPlaylists: '/playlists/user/:userId',
+        getUserPlaylists: '/playlists/user/:username',
         getMyPlaylists: '/playlists/me',
     }
 }

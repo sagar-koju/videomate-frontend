@@ -1,9 +1,7 @@
 'use client';
 import { formatDuration, formatNumber, timeAgo } from '@/lib/utils';
 import Image from 'next/image';
-import Link from 'next/link';
 import React, { useState } from 'react'
-import { Video } from '@/types/video';
 import { ArrowDownToLine, Clock, EllipsisVertical, Flag, ListVideo, Share2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import {
@@ -16,6 +14,7 @@ import {
     useInteractions,
     FloatingPortal
 } from '@floating-ui/react';
+import { Playlist } from '@/types/playlist';
 
 const dropdownItems = [
     { name: 'watch-later', label: 'Add to Watch Later', icon: Clock, action: () => { } },
@@ -25,7 +24,7 @@ const dropdownItems = [
     { name: 'report', label: 'Report', icon: Flag, action: () => { } },
 ]
 
-const ChannelVideoCard = ({ video }: { video: Video }) => {
+const ChannelPlaylistCard = ({ playlist }: { playlist: Playlist }) => {
     const router = useRouter();
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -45,31 +44,25 @@ const ChannelVideoCard = ({ video }: { video: Video }) => {
     const dismiss = useDismiss(context);
     const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
 
+    console.log('playlist', playlist);
     return (
-        <div onClick={() => { router.push(`/watch?v=${video._id}`) }} className="group rounded-md">
+        <div onClick={() => { router.push(`/watch?v=${playlist._id}`) }} className="group rounded-md">
             <div className="group-hover:shadow-md block p-2 rounded-md">
-                <div className="relative w-full aspect-video rounded-md overflow-hidden bg-gray-200">
-                    <Image
-                        src={video.thumbnail}
-                        alt={video.title}
-                        fill
-                        className="object-cover "
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                    />
-                    <span className="absolute bottom-1 right-1 bg-black/60 text-white text-xs px-1.5 py-0.5 rounded">
-                        {formatDuration(video.duration)}
-                    </span>
+                <div className="relative w-full aspect-video rounded-md overflow-hidden bg-gray-300">
+                    <div className="absolute flex bottom-2 right-2 gap-2 bg-black/40 rounded-md px-2 py-1 text-white text-sm items-center">
+                        <ListVideo className="w-4 h-4" />
+                        <span>{playlist.videoCount}</span>
+                        <p>videos</p>
+                    </div>
                 </div>
 
                 <div
                     className="relative flex">
                     <div className="mt-2 flex-1">
                         <h3 className="text-lg font-semibold line-clamp-1 group-hover:text-black">
-                            {video.title}
+                            {playlist.name}
                         </h3>
-                        <p className="text-sm text-gray-500 mt-1">
-                            {formatNumber(video.views)} · {timeAgo(video.createdAt)}
-                        </p>
+                        <p className='text-sm text-slate-500'>View full playlist</p>
                     </div>
                     <div
                         ref={refs.setReference}
@@ -114,4 +107,4 @@ const ChannelVideoCard = ({ video }: { video: Video }) => {
     )
 }
 
-export default ChannelVideoCard
+export default ChannelPlaylistCard

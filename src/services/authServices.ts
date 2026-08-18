@@ -36,6 +36,6 @@ export const authServices = {
 
     async getCurrentUser() {
         const response = await apiClient.get(endpoints.auth.getCurrentUser);
-        return response.data;
+        return response.data.data;
     }
 }

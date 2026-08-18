@@ -7,7 +7,7 @@ const ShimmerOverlay = () => (
 const Skeleton = () => {
   return (
     <div className="h-full w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
-      {[...Array(12)].map((_, index) => (
+      {[...Array(9)].map((_, index) => (
         <div
           key={index}
           className="m-1 p-2 border border-slate-300 flex flex-col"

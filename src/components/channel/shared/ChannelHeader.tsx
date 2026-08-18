@@ -3,17 +3,16 @@ import React from 'react'
 import { useGetCurrentUser } from "@/hooks/useAuth";
 import { useGetChannel } from '@/hooks/useUser';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
 import { dateFormatter, formatNumber } from "@/lib/utils";
 import { Bell, Users } from 'lucide-react';
-import ChannelTabs from './ChannelTabs';
 
 export default function ChannelHeader({ username }: { username: string }) {
-    const { data: channelData, isLoading, isError } = useGetChannel(username);
+    const { data: channelData, isLoading: channelDataLoading, isError } = useGetChannel(username);
+    const { data: currentUser, isLoading: currentUserLoading } = useGetCurrentUser();
 
     return (
         <div className='w-full'>
-            {isLoading ? (
+            {channelDataLoading || currentUserLoading ? (
                 <p>Loading...</p>
             ) : isError ? (
                 <p>Error loading channel data.</p>
@@ -52,7 +51,7 @@ export default function ChannelHeader({ username }: { username: string }) {
                     </div>
 
                     <div className="flex py-2 items-center w-full max-w-250 gap-4">
-                        {username === channelData?.username ? (
+                        {currentUser?.username === channelData?.username ? (
                            <div className="flex flex-col w-full gap-2 py-4">
                              <div className="flex w-full justify-between items-center gap-2">
                                 <button className="flex-1 px-4 py-2 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition-colors max-w-100">
@@ -61,9 +60,6 @@ export default function ChannelHeader({ username }: { username: string }) {
                                 <button className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors max-w-100">
                                     Manage Videos
                                 </button>
-                            </div>
-                            <div className="flex items-center">
-                                
                             </div>
                            </div>
                         ):(

@@ -32,6 +32,20 @@ export const useGetMyPlaylists = () => {
     })
 };
 
+export const useGetUserPlaylists = (username: string) => {
+    return useInfiniteQuery({
+        queryKey: ['userPlaylists', username],
+        queryFn: ({ pageParam }) => playlistServices.getUserPlaylists(username, { limit: 10, cursor: pageParam }),
+        initialPageParam: undefined,
+        getNextPageParam: (lastPage) => {
+            return lastPage.hasMore ? lastPage.nextCursor : undefined;
+        },
+        staleTime: 1000 * 60 * 5, // 5 minutes
+        refetchOnMount: true,
+        retry: false,
+    })
+};
+
 export const useTogglePlaylistVisibility = () => {
     const queryClient = useQueryClient();
     return useMutation({

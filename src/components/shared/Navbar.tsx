@@ -84,10 +84,10 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <Bell className="text-slate-900" size={20} />
             <div className="relative" ref={dropdownRef}>
-              {currentUser?.data?.avatar ? (
+              {currentUser?.avatar ? (
                 <div onClick={() => setOpenProfileDropdown(prev => !prev)} className="relative h-8 w-8">
                   <Image
-                    src={currentUser.data.avatar}
+                    src={currentUser.avatar}
                     alt="Profile"
                     className="rounded-full object-cover"
                     fill
@@ -103,7 +103,7 @@ const Navbar = () => {
                     <div className="relative flex w-full justify-center items-center p-4 pb-1">
                       <div className="relative h-20 w-20">
                         <Image
-                          src={currentUser.data.avatar}
+                          src={currentUser.avatar}
                           alt="Profile"
                           className="rounded-full object-cover"
                           fill
@@ -112,8 +112,8 @@ const Navbar = () => {
                       </div>
                     </div>
                     <div className="flex items-center flex-col">
-                      <span className="ml-2 text-lg font-semibold text-slate-900">{currentUser.data.fullName}</span>
-                      <span className="ml-2 text-sm text-slate-700">@{currentUser.data.username}</span>
+                      <span className="ml-2 text-lg font-semibold text-slate-900">{currentUser.fullName}</span>
+                      <span className="ml-2 text-sm text-slate-700">@{currentUser.username}</span>
                     </div>
                     <div className="flex flex-col gap-1 mt-4">
                       {dropdownItems.map((item) => (

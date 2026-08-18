@@ -12,6 +12,11 @@ export const playlistServices = {
         return response.data.data;
     },
 
+    async getUserPlaylists(username: string, {cursor, limit}: {cursor?: string, limit: number}) {
+        const response = await apiClient.get(endpoints.playlists.getUserPlaylists.replace(':username', username), { params: { cursor, limit } });
+        return response.data.data;
+    },
+
     async togglePlaylistVisibility(playlistId: string) {
         const response = await apiClient.patch(endpoints.playlists.togglePlaylistVisibility.replace(':playlistId', playlistId));
         return response.data.data;

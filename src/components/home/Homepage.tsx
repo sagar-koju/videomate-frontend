@@ -1,12 +1,8 @@
 'use client'
 import React, { useEffect } from 'react'
-import { dummyVideos } from "@/types/data";
 import { useGetHomeFeed } from "@/hooks/useVideos";
 import { useInView } from "react-intersection-observer";
 import Skeleton from './Skeleton';
-import { formatDuration, timeAgo } from "@/lib/utils";
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import VideoCard from '../video/VideoCard';
 
@@ -40,10 +36,17 @@ export default function Homepage({ scrollRoot }: HomePageProps) {
           <p className="text-gray-500">Error loading videos. Please try again later.</p>
         </div>
       ) : (
-        <div className="h-full w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
-          {Video?.map((video) => (
-            <VideoCard key={video._id} video={video} />
-          ))}
+        <div className='h-full w-full'>
+          <div  className="h-full w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
+            {Video?.map((video) => (
+              <VideoCard key={video._id} video={video} />
+            ))}
+          </div>
+          <div ref={ref} className="w-full h-full">
+            {isFetchingNextPage && (
+            <Skeleton />
+          )}
+          </div>
         </div>
       )}
     </>

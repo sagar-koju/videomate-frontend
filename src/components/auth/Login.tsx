@@ -40,7 +40,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen w-full bg-black/10 flex items-center justify-center p-6">
-      <div className="w-full max-w-5xl h-[640px] bg-white rounded-[22px] shadow-2xl shadow-slate-400/40 grid grid-cols-1 md:grid-cols-2 overflow-hidden">
+      <div className="w-full max-w-5xl h-160 bg-white rounded-[22px] shadow-2xl shadow-slate-400/40 grid grid-cols-1 md:grid-cols-2 overflow-hidden">
 
         {/* LEFT: FORM */}
         <div className="flex flex-col justify-between p-8 md:p-11 order-2 md:order-1">
@@ -55,7 +55,7 @@ const Login = () => {
           </svg>
 
           {/* form */}
-          <div className="flex flex-col gap-4 max-w-[300px] overflow-y-auto">
+          <div className="flex flex-col gap-4 max-w-75 overflow-y-auto">
             <div>
               <p className="text-xs font-semibold tracking-wider uppercase text-slate-400 mb-1">
                 Welcome back

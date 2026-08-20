@@ -26,6 +26,8 @@ export default function ChannelHeader({ username }: { username: string }) {
                                     alt="CoverImage"
                                     className="object-cover rounded-lg"
                                     fill
+                                    sizes='600px'
+                                    priority
                                 />
                             </div>
                         </div>
@@ -37,6 +39,7 @@ export default function ChannelHeader({ username }: { username: string }) {
                                 alt="Profile"
                                 className="rounded-full object-cover"
                                 fill
+                                sizes='200px'
                             />
                         </div>
                         <div className="flex flex-col">

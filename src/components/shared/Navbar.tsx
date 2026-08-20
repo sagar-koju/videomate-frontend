@@ -24,7 +24,7 @@ const Navbar = () => {
   const dropdownRef = useRef<HTMLDivElement>(null)
   const router = useRouter();
 
-  const { data: currentUser} = useGetCurrentUser();
+  const { data: currentUser, isLoading, isError } = useGetCurrentUser();
 
   const handleLogin = () => {
     router.push('/login');

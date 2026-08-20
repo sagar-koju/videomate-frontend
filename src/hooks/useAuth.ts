@@ -12,12 +12,8 @@ export const useLogin = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: ({ email, password }: LoginPayload) => authServices.login(email, password),
-        onSuccess: async (response) => {
-            await queryClient.setQueryData(['currentUser'], {
-                statusCode: 200,
-                message: 'Current user fetched successfully',
-                data: response?.data?.user,
-            });
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ['currentUser'] });
             await queryClient.invalidateQueries({ queryKey: ['homeFeed'] });
         }
     })
@@ -54,11 +50,12 @@ export const useRegister = () => {
 }
 
 export const useGetCurrentUser = () => {
-    return useQuery({
+   return useQuery({
         queryKey: ['currentUser'],
-        queryFn: authServices.getCurrentUser,
+        queryFn: () => authServices.getCurrentUser(),
         retry: false,
-    })
+        staleTime: 5 * 60 * 1000, // 5 minutes
+   })
 }
 
 export const useLogout = () => {

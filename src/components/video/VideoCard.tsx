@@ -13,7 +13,14 @@ import {
     shift,
     useDismiss,
     useInteractions,
+    useClick,
+    useHover,
+    safePolygon,
     FloatingPortal,
+    FloatingTree,
+    FloatingNode,
+    useFloatingNodeId,
+    useFloatingParentNodeId,
 } from '@floating-ui/react'
 
 const dropDownMenuItems = [
@@ -28,7 +35,9 @@ const VideoCard = ({ video }: { video: Video }) => {
     const [menuDropdownOpen, setMenuDropdownOpen] = useState(false);
     const router = useRouter();
 
+    const nodeId = useFloatingNodeId();
     const { refs, floatingStyles, context } = useFloating({
+        nodeId,
         open: menuDropdownOpen,
         onOpenChange: setMenuDropdownOpen,
         placement: 'bottom-start',

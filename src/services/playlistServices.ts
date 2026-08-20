@@ -26,4 +26,9 @@ export const playlistServices = {
         const response = await apiClient.delete(endpoints.playlists.deletePlaylist.replace(':playlistId', playlistId));
         return response.data.data;
     },
+
+    async addVideoToPlaylist(playlistId: string, videoId: string) {
+        const response = await apiClient.post(endpoints.playlists.addVideoToPlaylist.replace(':playlistId', playlistId).replace(':videoId', videoId));
+        return response.data.data;
+    }
 }

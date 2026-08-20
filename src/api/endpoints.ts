@@ -39,6 +39,7 @@ export const endpoints = {
         create: '/playlists',
         getPlaylistById: '/playlists/:playlistId',
         deletePlaylist: '/playlists/:playlistId',
+        addVideoToPlaylist: '/playlists/:playlistId/videos/:videoId',
         removeVideoFromPlaylist: '/playlists/:playlistId/videos/:videoId',
         togglePlaylistVisibility: '/playlists/:playlistId/visibility',
         getUserPlaylists: '/playlists/user/:username',

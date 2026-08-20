@@ -90,3 +90,24 @@ export const useDeletePlaylist = () => {
         })
 };
 
+export const useAddVideoToPlaylist = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({playlistId, videoId}: {playlistId: string, videoId: string}) => {
+            return playlistServices.addVideoToPlaylist(playlistId, videoId);
+        },
+        onMutate: async ({playlistId, videoId}) => {
+            await queryClient.cancelQueries({ queryKey: ['myPlaylists'] });
+            return { previousPlaylistData:  queryClient.getQueryData(['myPlaylists'])};
+        },
+        onError: (err, {playlistId, videoId}, context) => {
+            if (context?.previousPlaylistData) {
+                queryClient.setQueryData(['myPlaylists'], context.previousPlaylistData);
+            }
+        },
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ['playlists'] });
+            await queryClient.invalidateQueries({ queryKey: ['myPlaylists'] });
+        }
+    })
+}
